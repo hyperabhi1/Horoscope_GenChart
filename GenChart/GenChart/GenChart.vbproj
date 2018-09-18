@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{519CC9AC-1AE2-41E1-B087-B7E90E0F88B9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>GenChart.PersonalDetails</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <RootNamespace>GenChart</RootNamespace>
     <AssemblyName>GenChart</AssemblyName>
     <FileAlignment>512</FileAlignment>

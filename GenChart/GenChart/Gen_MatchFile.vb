@@ -31,6 +31,7 @@ Public Class Gen_MatchFile
         Dim da As New SqlDataAdapter(cmd)
         Dim ds As New DataSet()
         da.Fill(ds)
+        connection.Close()
         For Each row As DataRow In ds.Tables(0).Rows
             Dim l As Integer = row.Item(3).ToString().Trim.Length / 2
             Select Case row.Item(2).ToString()

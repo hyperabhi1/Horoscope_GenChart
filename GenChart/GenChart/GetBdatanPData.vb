@@ -1,92 +1,147 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.SqlClient
 Public Class GetBDatanPData
-	Sub GetBdatanPDataMain()
-		Dim DateTimeB As New NameValueCollection
-		Dim PlaceDataB As New NameValueCollection
-		Dim BData As New NameValueCollection
-		Dim PlaceData As New NameValueCollection
-		Dim P_list(12) As String
-		Dim H_List(12) As String
-		Dim HstrCusp(12) As String
-		Dim Hplanets(12) As String
-		Dim BirthLagna(12, 2) As String
-		Dim BirthBhav(12, 2) As String
-		Dim BirthSouth(12) As String
-		Dim Horo As New TASystem.TrueAstro
+    'Sub GetBdatanPDataMain()
+    Public Shared Sub Main()
+        Dim DateTimeB As New NameValueCollection
+        Dim PlaceDataB As New NameValueCollection
+        Dim BData As New NameValueCollection
+        Dim PlaceData As New NameValueCollection
+        Dim personalDetails As PersonalDetails = New PersonalDetails()
+        Dim P_list(12) As String
+        Dim H_List(12) As String
+        Dim HstrCusp(12) As String
+        Dim Hplanets(12) As String
+        Dim BirthLagna(12, 2) As String
+        Dim BirthBhav(12, 2) As String
+        Dim BirthSouth(12) As String
+        Dim Horo As New TASystem.TrueAstro
 
-		Dim connection As SqlConnection = New SqlConnection("data source=WIN-KSTUPT6CJRC;initial catalog=ASTROLOGYSOFTWARE_DB;integrated security=True;multipleactiveresultsets=True;")
-		connection.Open()
-		Dim cmd As New SqlCommand($"SELECT TOP 1 HUSERID, HID, RECTIFIEDDATE, RECTIFIEDTIME, RECTIFIEDDST, RECTIFIEDPLACE, 
-                                    RECTIFIEDLONGTITUDE, RECTIFIEDLONGTITUDEEW, RECTIFIEDLATITUDE,RECTIFIEDLATITUDENS
-                                    FROM HMAIN
-                                    INNER JOIN HREQUEST
-                                    ON HMAIN.HUSERID = HREQUEST.RQUSERID
-                                        AND HMAIN.HID = HREQUEST.RQHID
-                                    WHERE HREQUEST.REQCAT = '9'
-                                        AND HREQUEST.RQUNREAD = 'Y';", connection)
-		Dim da As New SqlDataAdapter(cmd)
-		Dim RowsData As New DataSet()
-		da.Fill(RowsData)
-		connection.Close()
-		Dim UID = RowsData.Tables(0).Rows(0)(0).Trim.ToString()
-		Dim HID = RowsData.Tables(0).Rows(0)(1).Trim.ToString()
-		Dim RECTIFIEDDATE = RowsData.Tables(0).Rows(0)(2).Trim.ToString()
-		Dim RECTIFIEDTIME = RowsData.Tables(0).Rows(0)(3).Trim.ToString()
-		Dim RECTIFIEDDST = RowsData.Tables(0).Rows(0)(4).Trim.ToString()
-		Dim RECTIFIEDPLACE = RowsData.Tables(0).Rows(0)(5).Trim.ToString()
-		Dim RECTIFIEDLONGTITUDE = RowsData.Tables(0).Rows(0)(6).Trim.ToString()
-		Dim RECTIFIEDLONGTITUDEEW = RowsData.Tables(0).Rows(0)(7).Trim.ToString()
-		Dim RECTIFIEDLATITUDE = RowsData.Tables(0).Rows(0)(8).Trim.ToString()
-		Dim RECTIFIEDLATITUDENS = RowsData.Tables(0).Rows(0)(9).Trim.ToString()
-        DateofBirth = RECTIFIEDDATE.Split(" ")(0)
-        DayofBirth = GetDayOfTheWeek(DateTime.Parse(RECTIFIEDDATE.Split(" ")(0).Replace("-", "/")).DayOfWeek)
-        TimeofBirth = RECTIFIEDDATE.Split(" ")(1)
-        Dim Year = RECTIFIEDDATE.Split("-")(0)
-		Dim Month = RECTIFIEDDATE.Split("-")(1)
-		Dim Day = RECTIFIEDDATE.Split("-")(2).Substring(0, 2)
-		Dim Hour = RECTIFIEDTIME.Split(":")(0).Substring(0, 2)
-		Dim Min = RECTIFIEDTIME.Split(":")(1)
-		Dim Sec = RECTIFIEDTIME.Split(":")(2)
-		Dim MSec = RECTIFIEDTIME.Split(".")(1)
-		BData.Add("Year", Year)
-		BData.Add("Month", Month)
-		BData.Add("Day", Day)
-		BData.Add("Hour", Hour)
-		BData.Add("Min", Min)
-		BData.Add("Sec", Sec)
-		BData.Add("mSec", MSec)
-		DateTimeB = BData
-        PlaceofBirth = RECTIFIEDPLACE
-        Dim Place = RECTIFIEDPLACE.Split("-")(0)
-		Dim State = RECTIFIEDPLACE.Split("-")(1)
-        Dim Country = RECTIFIEDPLACE.Split("-")(2)
-        Latitude = RECTIFIEDLATITUDE
-        Longitude = RECTIFIEDLONGTITUDE
+        ''Dim connection As SqlConnection = New SqlConnection("data source=WIN-KSTUPT6CJRC;initial catalog=ASTROLOGYSOFTWARE_DB;integrated security=True;multipleactiveresultsets=True;")
+        ''connection.Open()
+        ''Dim cmd As New SqlCommand($"SELECT TOP 1 HUSERID, HID, RECTIFIEDDATE, RECTIFIEDTIME, RECTIFIEDDST, RECTIFIEDPLACE, 
+        ''                            RECTIFIEDLONGTITUDE, RECTIFIEDLONGTITUDEEW, RECTIFIEDLATITUDE,RECTIFIEDLATITUDENS
+        ''                            FROM HMAIN
+        ''                            INNER JOIN HREQUEST
+        ''                            ON HMAIN.HUSERID = HREQUEST.RQUSERID
+        ''                                AND HMAIN.HID = HREQUEST.RQHID
+        ''                            WHERE HREQUEST.REQCAT = '9'
+        ''                                AND HREQUEST.RQUNREAD = 'Y';", connection)
+        ''Dim da As New SqlDataAdapter(cmd)
+        ''Dim RowsData As New DataSet()
+        ''da.Fill(RowsData)
+        ''connection.Close()
+        ''Dim UID = RowsData.Tables(0).Rows(0)(0).Trim.ToString()
+        ''Dim HID = RowsData.Tables(0).Rows(0)(1).Trim.ToString()
+        ''Dim RECTIFIEDDATE = RowsData.Tables(0).Rows(0)(2).Trim.ToString()
+        ''Dim RECTIFIEDTIME = RowsData.Tables(0).Rows(0)(3).Trim.ToString()
+        ''Dim RECTIFIEDDST = RowsData.Tables(0).Rows(0)(4).Trim.ToString()
+        ''Dim RECTIFIEDPLACE = RowsData.Tables(0).Rows(0)(5).Trim.ToString()
+        ''Dim RECTIFIEDLONGTITUDE = RowsData.Tables(0).Rows(0)(6).Trim.ToString()
+        ''Dim RECTIFIEDLONGTITUDEEW = RowsData.Tables(0).Rows(0)(7).Trim.ToString()
+        ''Dim RECTIFIEDLATITUDE = RowsData.Tables(0).Rows(0)(8).Trim.ToString()
+        ''Dim RECTIFIEDLATITUDENS = RowsData.Tables(0).Rows(0)(9).Trim.ToString()
+        ''Dim Year = RECTIFIEDDATE.Split("-")(0)
+        ''Dim Month = RECTIFIEDDATE.Split("-")(1)
+        ''Dim Day = RECTIFIEDDATE.Split("-")(2).Substring(0, 2)
+        ''Dim Hour = RECTIFIEDTIME.Split(":")(0).Substring(0, 2)
+        ''Dim Min = RECTIFIEDTIME.Split(":")(1)
+        ''Dim Sec = RECTIFIEDTIME.Split(":")(2)
+        ''Dim MSec = RECTIFIEDTIME.Split(".")(1)
+        'BData.Add("Year", Year)
+        'BData.Add("Month", Month)
+        'BData.Add("Day", Day)
+        'BData.Add("Hour", Hour)
+        'BData.Add("Min", Min)
+        'BData.Add("Sec", Sec)
+        'BData.Add("mSec", MSec)
+        BData.Add("Year", "2018")
+        BData.Add("Month", "9")
+        BData.Add("Day", "4")
+        BData.Add("Hour", "12")
+        BData.Add("Min", "55")
+        BData.Add("Sec", "39")
+        BData.Add("mSec", "630")
+        DateTimeB = BData
+        ''Dim Place = RECTIFIEDPLACE.Split("-")(0)
+        ''Dim State = RECTIFIEDPLACE.Split("-")(1)
+        ''Dim Country = RECTIFIEDPLACE.Split("-")(2)
+#Region "Personal Details"
+        'personalDetails.DateofBirth = RECTIFIEDDATE.Split(" ")(0)
+        'personalDetails.DayofBirth = GetDayOfTheWeek(DateTime.Parse(RECTIFIEDDATE.Split(" ")(0).Replace("-", "/")).DayOfWeek)
+        'personalDetails.TimeofBirth = RECTIFIEDDATE.Split(" ")(1)
+        'personalDetails.PlaceofBirth = RECTIFIEDPLACE
+        'personalDetails.Latitude = RECTIFIEDLATITUDE
+        'personalDetails.Longitude = RECTIFIEDLONGTITUDE
+        'connection.Open()
+        'Dim command As New SqlCommand($"select USERNAME from UPROF WHERE USERID = '" + UID + "';", connection)
+        'Dim da0 As New SqlDataAdapter(command)
+        'Dim ds As New DataSet()
+        'da0.Fill(ds)
+        'connection.Close()
+        'personalDetails.NameoftheChartOwner = ds.Tables(0).Rows(0)(0).Trim.ToString()
+#End Region
+#Region "Dummy Personal Details"
+        personalDetails.DateofBirth = "2010-09-07"
+        personalDetails.DayofBirth = "Sunday"
+        personalDetails.TimeofBirth = "16:25:36.000"
+        personalDetails.PlaceofBirth = "Delhi-Delhi-India"
+        personalDetails.Latitude = "87.416666666666671"
+        personalDetails.Longitude = "21.534936216517764"
+        'connection.Open()
+        'Dim command As New SqlCommand($"select USERNAME from UPROF WHERE USERID = '" + UID + "';", connection)
+        'Dim da0 As New SqlDataAdapter(command)
+        'Dim ds As New DataSet()
+        'da0.Fill(ds)
+        'connection.Close()
+        personalDetails.NameoftheChartOwner = "Abhishek"
+#End Region
+        ''Dim lonB = RECTIFIEDLONGTITUDE
+        ''Dim latB = RECTIFIEDLATITUDE
+        ''Dim eW = RECTIFIEDLONGTITUDEEW
+        ''Dim nS = RECTIFIEDLATITUDENS
+        ''Dim TzB = "5.5"
+        ''Dim DstB = RECTIFIEDDST
+        'PlaceData.Add("Place", Place)
+        'PlaceData.Add("State", State)
+        'PlaceData.Add("Country", Country)
+        Dim StrPlace(3) As String
+        StrPlace = Split("Delhi - Delhi - India", "-")
+        PlaceData.Add("Place", StrPlace(0))
+        PlaceData.Add("State", StrPlace(1))
+        PlaceData.Add("Country", StrPlace(2))
+        'PlaceData.Add("lonB", lonB)
+        'PlaceData.Add("latB", latB)
+        'PlaceData.Add("eW", eW)
+        'PlaceData.Add("nS", nS)
+        'PlaceData.Add("TzB", TzB)
+        'PlaceData.Add("DstB", DstB)
+        PlaceData.Add("lonB", 87.416666666666671)
+        PlaceData.Add("latB", 21.534936216517764)
+        PlaceData.Add("eW", "E")
+        PlaceData.Add("nS", "N")
+        PlaceData.Add("TzB", 5.5)
+        PlaceData.Add("DstB", 0)
+        PlaceDataB = PlaceData
+        Horo.getBirthPlanetCusp(DateTimeB, PlaceDataB, P_list, H_List)
+        Horo.getBirthLagnaBhav(DateTimeB, PlaceDataB, BirthLagna, BirthBhav, BirthSouth)
+        Dim DasaListP As New DataTable
+        DasaListP.Columns.Add("Dasha")
+        DasaListP.Columns.Add("Bhukti")
+        DasaListP.Columns.Add("Antara")
+        DasaListP.Columns.Add("Suk")
+        DasaListP.Columns.Add("Pra")
+        DasaListP.Columns.Add("Cl_Date")
 
-        Dim lonB = RECTIFIEDLONGTITUDE
-		Dim latB = RECTIFIEDLATITUDE
-		Dim eW = RECTIFIEDLONGTITUDEEW
-		Dim nS = RECTIFIEDLATITUDENS
-		Dim TzB = "5.5"
-		Dim DstB = RECTIFIEDDST
-		PlaceData.Add("Place", Place)
-		PlaceData.Add("State", State)
-		PlaceData.Add("Country", Country)
-		PlaceData.Add("lonB", lonB)
-		PlaceData.Add("latB", latB)
-		PlaceData.Add("eW", eW)
-		PlaceData.Add("nS", nS)
-		PlaceData.Add("TzB", TzB)
-		PlaceData.Add("DstB", DstB)
-		PlaceDataB = PlaceData
-		Horo.getBirthPlanetCusp(DateTimeB, PlaceDataB, P_list, H_List)
-		UpdateHCusp(HID, UID, H_List)
-		UpdateHPlanet(HID, UID, P_list)
-		UpdateStatus(HID, UID)
-	End Sub
+        Horo.getBirthDasaFull(DateTimeB, PlaceDataB, DasaListP)
+        'UpdateHCusp(HID, UID, H_List)
+        'UpdateHPlanet(HID, UID, P_list)
+        'UpdateStatus(HID, UID)
+        Dim genChart As GenerateChart = New GenerateChart()
+        genChart.GenerateChartMain("HID", "UID", P_list, H_List, BirthLagna, BirthBhav, BirthSouth, DasaListP, personalDetails)
+    End Sub
 
-	Sub UpdateHCusp(ByRef HID As String, ByRef UID As String, ByRef H_List As String())
+    Sub UpdateHCusp(ByRef HID As String, ByRef UID As String, ByRef H_List As String())
 		Dim con As New SqlConnection
 		Dim cmd As New SqlCommand
 		Try

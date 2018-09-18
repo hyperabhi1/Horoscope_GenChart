@@ -1,13 +1,13 @@
-﻿Public Module PersonalDetails
-    Public NameoftheChartOwner As String
-    Public DateofBirth As String
-    Public PlaceofBirth As String
-    Public TimeofBirth As String
-    Public Latitude As String
-    Public Longitude As String
-    Public DayofBirth As String
-    Public Rashi As String
-    Public Star As String
-    Public SunSign As String
-    Public BalanceDasa As String
-End Module
+﻿Public Class PersonalDetails
+    Public Property NameoftheChartOwner As String
+    Public Property DateofBirth As String
+    Public Property PlaceofBirth As String
+    Public Property TimeofBirth As String
+    Public Property Latitude As String
+    Public Property Longitude As String
+    Public Property DayofBirth As String
+    Public Property Rashi As String
+    Public Property Star As String
+    Public Property SunSign As String
+    Public Property BalanceDasa As String
+End Class
