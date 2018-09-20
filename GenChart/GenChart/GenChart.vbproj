@@ -72,10 +72,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailNotify.vb" />
     <Compile Include="FillCuspTable.vb" />
     <Compile Include="GenerateChart.vb" />
-    <Compile Include="Gen_MatchFile.vb" />
-    <Compile Include="Gen_MatchFileAsc.vb" />
     <Compile Include="GetBdatanPData.vb" />
     <Compile Include="PersonalDetails.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

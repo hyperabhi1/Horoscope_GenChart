@@ -10,9 +10,9 @@ Public Class FillCuspTable
 		WriteToHRAKE(HID, UID)
 	End Sub
 	Sub MakeCusp(ByRef HID, ByRef UID)
-		Dim SelectHCUSP = "SELECT * FROM _HCUSP WHERE CUSPUSERID = '" + UID + "' AND CUSPHID = '" + HID + "';"
-		Dim connection As SqlConnection = New SqlConnection("data source=49.50.103.132;initial catalog=ASTROLOGYSOFTWARE_DB;integrated security=False;User Id=sa;password=pSI)TA1t0K[)")
-		connection.Open()
+        Dim SelectHCUSP = "SELECT * FROM HCUSP WHERE CUSPUSERID = '" + UID + "' AND CUSPHID = '" + HID + "';"
+        Dim connection As SqlConnection = New SqlConnection("data source=49.50.103.132;initial catalog=HEADLETTERS_ENGINE;integrated security=False;User Id=sa;password=pSI)TA1t0K[)")
+        connection.Open()
 		Dim cmd As New SqlCommand(SelectHCUSP, connection)
 		Dim da As New SqlDataAdapter(cmd)
 		Dim ds As New DataSet()
@@ -32,9 +32,9 @@ Public Class FillCuspTable
 		connection.Close()
 	End Sub
 	Sub MakeCusp_checkHouse(ByRef HID As String, ByRef UID As String)
-		Dim SelectHPLANET = "SELECT * FROM TABLE_HPLANET WHERE PLHUSERID = '" + UID + "' AND PLHID = '" + HID + "';"
-		Dim connection As SqlConnection = New SqlConnection("data source=49.50.103.132;initial catalog=ASTROLOGYSOFTWARE_DB;integrated security=False;User Id=sa;password=pSI)TA1t0K[)")
-		connection.Open()
+        Dim SelectHPLANET = "SELECT * FROM HPLANET WHERE PLHUSERID = '" + UID + "' AND PLHID = '" + HID + "';"
+        Dim connection As SqlConnection = New SqlConnection("data source=49.50.103.132;initial catalog=HEADLETTERS_ENGINE;integrated security=False;User Id=sa;password=pSI)TA1t0K[)")
+        connection.Open()
 		Dim cmd As New SqlCommand(SelectHPLANET, connection)
 		Dim da As New SqlDataAdapter(cmd)
 		Dim ds As New DataSet()
@@ -111,14 +111,14 @@ Public Class FillCuspTable
 		Dim con As New SqlConnection
 		Dim cmd As New SqlCommand
 		Try
-			con.ConnectionString = "data source=WIN-KSTUPT6CJRC;initial catalog=ASTROLOGYSOFTWARE_DB;integrated security=True;multipleactiveresultsets=True;"
-			con.Open()
+            con.ConnectionString = "data source=49.50.103.132;initial catalog=HEADLETTERS_ENGINE;integrated security=False;User Id=sa;password=pSI)TA1t0K[)"
+            con.Open()
 			cmd.Connection = con
 			Dim flag = False
 
 			For i As Integer = 0 To 11
-				cmd.CommandText = "INSERT INTO CUSP VALUES ('" + UID + "','" + HID + "','" + C(i) + "','" + ST(i) + "');"
-				cmd.ExecuteNonQuery()
+                cmd.CommandText = "INSERT INTO CUSP VALUES ('" + UID + "','" + HID + "','" + C(i) + "','" + ST(i).ToUpper() + "');"
+                cmd.ExecuteNonQuery()
 			Next
 		Catch ex As Exception
 		Finally
@@ -132,10 +132,10 @@ Public Class FillCuspTable
 		Dim R2 As String = ""
 		Dim K1 As String = ""
 		Dim K2 As String = ""
-		Dim SelectHPLANET_RA = "SELECT * FROM TABLE_HPLANET WHERE UID = '" + UID + "' AND HID = '" + HID + "' AND PLANET = 'RA'"
-		Dim SelectHPLANET_KE = "SELECT * FROM TABLE_HPLANET WHERE UID = '" + UID + "' AND HID = '" + HID + "' AND PLANET = 'KE'"
-		Dim connection As SqlConnection = New SqlConnection("data source=49.50.103.132;initial catalog=ASTROLOGYSOFTWARE_DB;integrated security=False;User Id=sa;password=pSI)TA1t0K[)")
-		connection.Open()
+        Dim SelectHPLANET_RA = "SELECT * FROM HPLANET WHERE PLHUSERID = '" + UID + "' AND PLHID = '" + HID + "' AND PLANET = 'RA'"
+        Dim SelectHPLANET_KE = "SELECT * FROM HPLANET WHERE PLHUSERID = '" + UID + "' AND PLHID = '" + HID + "' AND PLANET = 'KE'"
+        Dim connection As SqlConnection = New SqlConnection("data source=49.50.103.132;initial catalog=HEADLETTERS_ENGINE;integrated security=False;User Id=sa;password=pSI)TA1t0K[)")
+        connection.Open()
 		Dim cmd As New SqlCommand(SelectHPLANET_RA, connection)
 		Dim da As New SqlDataAdapter(cmd)
 		Dim ds As New DataSet()
@@ -189,9 +189,9 @@ Public Class FillCuspTable
 				FK1 = FK1 + R2
 			End If
 		End If
-		Dim InsertHRAKE_RA = "INSERT INTO HRAKE VALUES ('" + UID + "','" + HID + "','RA','" + FR1 + "');"
-		Dim InsertHRAKE_KE = "INSERT INTO HRAKE VALUES ('" + UID + "','" + HID + "','KE','" + FK1 + "');"
-		connection.Open()
+        Dim InsertHRAKE_RA = "INSERT INTO HRAKE VALUES ('" + UID + "','" + HID + "','RA','" + FR1.ToUpper() + "');"
+        Dim InsertHRAKE_KE = "INSERT INTO HRAKE VALUES ('" + UID + "','" + HID + "','KE','" + FK1.ToUpper() + "');"
+        connection.Open()
 		Dim cmd1 As New SqlCommand(InsertHRAKE_RA + InsertHRAKE_KE, connection)
 		Dim da1 As New SqlDataAdapter(cmd1)
 		Dim ds1 As New DataSet()
